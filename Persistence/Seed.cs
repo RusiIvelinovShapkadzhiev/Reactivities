@@ -7,7 +7,7 @@ namespace Persistence
 {
     public class Seed
     {
-        public static void SeedData (DataContext context) 
+        public static void SeedDataToActivities (DataContext context) 
         {
             if(!context.Activities.Any())
             {
@@ -109,5 +109,13 @@ namespace Persistence
                 context.SaveChanges();
             }
         } 
+
+        public static void SeedDataToBrands (DataContext context)
+        {
+            if(!context.Brands.Any())
+            {
+                
+            }
+        }
     }
 }

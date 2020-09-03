@@ -11,6 +11,11 @@ namespace Persistence
 
         public DbSet <Value> Values { get; set; }
         public DbSet <Activity> Activities { get; set; }
+        public DbSet <Brand> Brands { get; set; }
+        public DbSet <Country> Countries { get; set; }
+        public DbSet <City> Cities { get; set; }
+        public DbSet <Category> Categories { get; set; }
+        public DbSet <CEO> CEOs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
