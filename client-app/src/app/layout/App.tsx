@@ -6,6 +6,7 @@ import NavBar from '../../feature/nav/NavBar';
 import ActivityDashboard from '../../feature/nav/activities/dashboard/ActivityDashboard';
 import CountriesDashBoard from '../../feature/nav/countries/dashboard/CountriesDashBoard';
 import { ICountry } from '../models/country';
+import agent from '../api/agent';
 
 const App = () => {
   const [activities, setActivities] = useState<IActivity[]> ([]);
@@ -27,15 +28,19 @@ const App = () => {
   };
 
   const handleCreateActivity = (activity: IActivity) => {
-    setActivities([...activities, activity]);
-    setSelectedActivity(activity);
-    setEditMode(false);
+    agent.Activities.create(activity).then(() => {
+      setActivities([...activities, activity]);
+      setSelectedActivity(activity);
+      setEditMode(false);
+    });
   };
 
   const handleEditActivity = (activity: IActivity) => {
-    setActivities([...activities.filter(a => a.id !== activity.id), activity]);
-    setSelectedActivity(activity);
-    setEditMode(false);
+    agent.Activities.update(activity).then(() => {
+      setActivities([...activities.filter(a => a.id !== activity.id), activity]);
+      setSelectedActivity(activity);
+      setEditMode(false);
+    });
   };
 
   const handleCountriesViewToggle = () => {
@@ -49,15 +54,16 @@ const App = () => {
   }
 
   const handleDeleteActivity = (id: string) => {
-    setActivities ([...activities.filter(a => a.id !== id)])
+    agent.Activities.delete(id).then(() => {
+      setActivities ([...activities.filter(a => a.id !== id)]);
+    });
   }
 
   useEffect(() => {
-        axios
-        .get<IActivity[]>('http://localhost:5000/api/activities')
+        agent.Activities.list()
         .then((response) => {
           let activities: IActivity[] = [];
-          response.data.forEach(activity => {
+          response.forEach((activity) => {
             activity.date = activity.date.split('.')[0];
             activities.push(activity);
           });
