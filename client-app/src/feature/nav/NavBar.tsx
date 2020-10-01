@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
-import React, { useContext } from 'react';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { Menu, Container, Button } from 'semantic-ui-react';
-import ActivityStore from '../../app/stores/activityStore';
 
 interface IProps {
     toggleRenderCountriesView: () => void;
@@ -12,18 +12,17 @@ const NavBar: React.FC<IProps> = ({
     toggleRenderCountriesView,
     toggleRenderActivityView
 }) => {
-    const activityStore = useContext(ActivityStore);
     return (
         <div> <Menu fixed='top' inverted>
          <Container>
-            <Menu.Item header>
+            <Menu.Item header as={NavLink} exact to='/'>
                 <img src="/assets/logo.png" alt="logo" style={{marginRight:'10px'}}/>
                  Reactivities   
             </Menu.Item>
-            <Menu.Item name='Activites' onClick={toggleRenderActivityView}/>
-            <Menu.Item name='Countries' onClick={toggleRenderCountriesView}/>
+            <Menu.Item name='Activites' onClick={toggleRenderActivityView} as={NavLink} to='/activities'/>
+            <Menu.Item name='Countries' onClick={toggleRenderCountriesView} as={NavLink} to='/countries'/>
             <Menu.Item name='friends'>
-                <Button positive content='Create Activity' onClick={activityStore.openCreateForm}></Button>
+                <Button positive content='Create Activity' as={NavLink} exact to='/createActivity'></Button>
             </Menu.Item>     
         </Container>   
         
