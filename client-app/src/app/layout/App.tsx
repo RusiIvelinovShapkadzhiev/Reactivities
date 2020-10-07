@@ -4,10 +4,12 @@ import NavBar from '../../feature/nav/NavBar';
 import ActivityDashboard from '../../feature/nav/activities/dashboard/ActivityDashboard';
 import CountriesDashBoard from '../../feature/nav/countries/dashboard/CountriesDashBoard';
 import { observer } from 'mobx-react-lite';
-import { Route, RouteComponentProps, withRouter } from 'react-router-dom';
+import { Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 import { HomePage } from '../../feature/nav/home/HomePage';
 import ActivityForm from '../../feature/nav/activities/dashboard/form/ActivityForm';
 import ActivityDetails from '../../feature/nav/activities/dashboard/details/ActivityDetails';
+import NotFound from './NotFound';
+import { ToastContainer } from 'react-toastify';
 
 const App : React.FC<RouteComponentProps> = ({location}) => {
   const [countriesMode, setCountriesMode] = useState(false);
@@ -24,6 +26,7 @@ const App : React.FC<RouteComponentProps> = ({location}) => {
   
     return (
       <Fragment>
+        <ToastContainer position='bottom-right'/>
         <Route exact path='/' component={HomePage}/>
         <Route path={'/(.+)'} render={()=> (
           <Fragment>
@@ -36,12 +39,15 @@ const App : React.FC<RouteComponentProps> = ({location}) => {
                 {/* {activityMode && (<Route exact path='/' component={HomePage}/>)}
                 {activityMode && (<Route path='/activities' component={ActivityDashboard}/>)}
                 {activityMode && (<Route path='/createActivity' component={ActivityForm}/>)} */}
-                <Route exact path='/activities' component={ActivityDashboard}/>
-                <Route path='/activities/:id' component={ActivityDetails}/>
-                <Route 
-                  key={location.key}
-                  path={['/createActivity', '/manage/:id']}
-                  component={ActivityForm}/>
+                <Switch>
+                  <Route exact path='/activities' component={ActivityDashboard}/>
+                  <Route path='/activities/:id' component={ActivityDetails}/>
+                  <Route 
+                    key={location.key}
+                    path={['/createActivity', '/manage/:id']}
+                    component={ActivityForm}/>
+                  <Route component={NotFound} />
+                </Switch>
               </Container>
 
           </Fragment>
