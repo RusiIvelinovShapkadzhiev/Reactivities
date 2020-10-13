@@ -1,8 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\API"
+    "\\API\\Controllers",
+    "\\API\\Middleware",
+    "\\client-app",
+    "\\client-app\\public",
+    "\\client-app\\src",
+    "\\client-app\\src\\app",
+    "\\client-app\\src\\app\\layout",
+    "\\client-app\\src\\feature\\nav\\activities"
   ],
-  "SelectedNode": "\\API\\API.csproj",
+  "SelectedNode": "\\client-app\\src\\app\\layout\\NotFound.tsx",
   "PreviewInSolutionExplorer": false
 }
