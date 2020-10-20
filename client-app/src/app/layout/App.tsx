@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useContext, useEffect } from 'react';
 import { Container } from 'semantic-ui-react';
 import NavBar from '../../feature/nav/NavBar';
 import ActivityDashboard from '../../feature/nav/activities/dashboard/ActivityDashboard';
@@ -10,8 +10,24 @@ import ActivityForm from '../../feature/nav/activities/dashboard/form/ActivityFo
 import ActivityDetails from '../../feature/nav/activities/dashboard/details/ActivityDetails';
 import NotFound from './NotFound';
 import { ToastContainer } from 'react-toastify';
+import LoginForm from '../../feature/user/LoginForm';
+import { RootStoreContext } from '../stores/rootStore';
+import { LoadingComponent } from './LoadingComponent';
+import ModalContainer from '../common/modals/ModalContainer';
 
 const App : React.FC<RouteComponentProps> = ({location}) => {
+  const rootStore = useContext(RootStoreContext);
+  const { setAppLoaded, token, appLoaded } = rootStore.commonStore;
+  const {getUser} = rootStore.userStore;
+
+  useEffect(() => {
+    if (token) {
+      getUser().finally(() => setAppLoaded())
+    } else {
+      setAppLoaded();
+    }
+  }, [getUser, setAppLoaded, token])
+  
   const [countriesMode, setCountriesMode] = useState(false);
   const [activityMode, setActivitiesMode] = useState(true);
   const handleCountriesViewToggle = () => {
@@ -23,9 +39,12 @@ const App : React.FC<RouteComponentProps> = ({location}) => {
     setActivitiesMode(true);
     setCountriesMode(false);
   }
+
+  if(!appLoaded) return <LoadingComponent content="Loading app ..." />
   
     return (
       <Fragment>
+        <ModalContainer />
         <ToastContainer position='bottom-right'/>
         <Route exact path='/' component={HomePage}/>
         <Route path={'/(.+)'} render={()=> (
@@ -36,9 +55,6 @@ const App : React.FC<RouteComponentProps> = ({location}) => {
             />
               <Container style={{marginLeft: '7em', padding: 70}}>
                 {countriesMode && (<CountriesDashBoard></CountriesDashBoard>)}
-                {/* {activityMode && (<Route exact path='/' component={HomePage}/>)}
-                {activityMode && (<Route path='/activities' component={ActivityDashboard}/>)}
-                {activityMode && (<Route path='/createActivity' component={ActivityForm}/>)} */}
                 <Switch>
                   <Route exact path='/activities' component={ActivityDashboard}/>
                   <Route path='/activities/:id' component={ActivityDetails}/>
@@ -46,6 +62,7 @@ const App : React.FC<RouteComponentProps> = ({location}) => {
                     key={location.key}
                     path={['/createActivity', '/manage/:id']}
                     component={ActivityForm}/>
+                  <Route path='/login' component={LoginForm}/>
                   <Route component={NotFound} />
                 </Switch>
               </Container>

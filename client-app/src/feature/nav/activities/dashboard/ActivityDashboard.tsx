@@ -2,16 +2,18 @@ import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import ActivityList  from './ActivityList';
-import ActivityStore from '../../../../app/stores/activityStore'
 import { LoadingComponent } from '../../../../app/layout/LoadingComponent';
+import { RootStoreContext } from '../../../../app/stores/rootStore';
 
 const ActivityDashboard: React.FC = () => {
-    const activityStore = useContext(ActivityStore);
+    const rootStore = useContext(RootStoreContext);
+    const {loadActivities, loadingInitial} = rootStore.activityStore;
+
     useEffect(() => {
-          activityStore.loadActivities();
-    }, [activityStore]);
+        loadActivities();
+    }, [loadActivities]);
   
-    if (activityStore.loadingInitial)  return <LoadingComponent content = 'Loading activities ...'/>
+    if (loadingInitial)  return <LoadingComponent content = 'Loading activities ...'/>
   
     return (
         <Grid>
@@ -19,15 +21,6 @@ const ActivityDashboard: React.FC = () => {
                 <ActivityList/>
             </Grid.Column>
             <Grid.Column width={6}>
-                {/* {activity && !editMode && (
-                    <ActivityDetails/>
-                )}
-                {editMode && (
-                    <ActivityForm 
-                    key={activity && (activity.id || 0)}
-                    activity={activity!}
-                    />
-                )} */}
                 <h2>Activity filters</h2>
             </Grid.Column>
         </Grid>
