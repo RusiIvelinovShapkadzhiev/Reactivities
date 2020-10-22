@@ -43,7 +43,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
         loadActivity,
     } = rootStore.activityStore;
 
-    const [activity, setActivity] = useState(new ActivityFormValues);
+    const [activity, setActivity] = useState(new ActivityFormValues());
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {

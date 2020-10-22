@@ -1,7 +1,6 @@
-import { group } from 'console';
 import { observer } from 'mobx-react-lite';
 import React, { Fragment, useContext } from 'react';
-import { Item, Label, Segment } from 'semantic-ui-react';
+import { Item, Label } from 'semantic-ui-react';
 import { RootStoreContext } from '../../../../app/stores/rootStore';
 import ActivityListItem from '../dashboard/ActivityListItem';
 import { format } from 'date-fns';
@@ -26,7 +25,6 @@ const ActivityList: React.FC = () => {
                 </Fragment>
             ))}
         </Fragment>
-      
     )
 }
 
