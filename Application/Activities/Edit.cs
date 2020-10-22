@@ -55,13 +55,13 @@ namespace Application.Activities
                     throw new RestException(HttpStatusCode.NotFound, new {activity = "Not found"});
 
                 activity.Title = request.Title ?? activity.Title;
-                activity.Name = request.Name ?? activity.Name;
-                activity.Notes = request.Notes ?? activity.Notes;
+                // activity.Name = request.Name ?? activity.Name;
+                // activity.Notes = request.Notes ?? activity.Notes;
                 activity.Description = request.Description ?? activity.Description;
                 activity.Category = request.Category ?? activity.Category;
                 activity.City = request.City ?? activity.City;
                 activity.Venue = request.Venue ?? activity.Venue;
-                activity.ModifiedOn = DateTime.Now;
+                // activity.ModifiedOn = DateTime.Now;
                 activity.Date = request.Date ?? activity.Date;
 
                 var success = await _context.SaveChangesAsync() > 0;
