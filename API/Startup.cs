@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Authorization;
 using Persistence;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using AutoMapper;
+using Infrastructure.Photos;
 
 namespace API
 {
@@ -89,6 +90,9 @@ namespace API
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessors, UserAccessor>();
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
+
 
             // identityBuilder.AddSignInManager();
 

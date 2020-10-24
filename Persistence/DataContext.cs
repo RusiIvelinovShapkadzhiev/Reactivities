@@ -18,6 +18,7 @@ namespace Persistence
         public DbSet <Category> Categories { get; set; }
         public DbSet <CEO> CEOs { get; set; }
         public DbSet<UserActivity> UserActivities { get; set; }
+        public DbSet<Photo> Photos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
