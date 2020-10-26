@@ -22,10 +22,25 @@ const NavBar: React.FC<IProps> = ({
                 <img src="/assets/logo.png" alt="logo" style={{marginRight:'10px'}}/>
                  Reactivities   
             </Menu.Item>
-            <Menu.Item name='Activites' onClick={toggleRenderActivityView} as={NavLink} to='/activities'/>
-            <Menu.Item name='Countries' onClick={toggleRenderCountriesView} as={NavLink} to='/countries'/>
+            <Menu.Item
+              name='Activites'
+              onClick={toggleRenderActivityView}
+              as={NavLink}
+              to='/activities'
+            />
+            <Menu.Item
+              name='Countries'
+              onClick={toggleRenderCountriesView}
+              as={NavLink}
+              to='/countries'
+            />
             <Menu.Item name='friends'>
-                <Button positive content='Create Activity' as={NavLink} exact to='/createActivity'></Button>
+                <Button
+                  positive content='Create Activity'
+                  as={NavLink}
+                  exact to='/createActivity'
+                >
+                </Button>
             </Menu.Item>
             {user && 
                         <Menu.Item position='right'>
@@ -34,7 +49,7 @@ const NavBar: React.FC<IProps> = ({
                             <Dropdown.Menu>
                               <Dropdown.Item 
                               as={Link}
-                              to={`/profile/username`}
+                              to={`/profile/${user.username}`}
                               text='My profile'
                               icon='user'
                               />
