@@ -21,6 +21,8 @@ using Persistence;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using AutoMapper;
 using Infrastructure.Photos;
+using API.SignalR;
+using System.Threading.Tasks;
 
 namespace API
 {
@@ -55,11 +57,12 @@ namespace API
                 opt.AddPolicy("CorsPolicy", policy => 
                 {
                     policy.AllowAnyHeader().AllowAnyMethod()
-                        .WithOrigins("http://localhost:3000");
+                        .WithOrigins("http://localhost:3000").AllowCredentials();
                 });
             });
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddAutoMapper(typeof(List.Handler));
+            services.AddSignalR();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
@@ -85,6 +88,20 @@ namespace API
                         IssuerSigningKey = key,
                         ValidateAudience = false,
                         ValidateIssuer = false
+                    };
+                    opt.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context => 
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+                            var path = context.HttpContext.Request.Path;
+                            if(!string.IsNullOrEmpty(accessToken) &&
+                            (path.StartsWithSegments("/chat")))
+                            {
+                                context.Token = accessToken;
+                            }
+                            return Task.CompletedTask;
+                        }
                     };
                 });
 
@@ -127,6 +144,7 @@ namespace API
                 endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
     }
