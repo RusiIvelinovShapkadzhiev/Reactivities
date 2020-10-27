@@ -6,10 +6,6 @@ import { Segment, Item, Header, Button, Image } from 'semantic-ui-react';
 import { IActivity } from '../../../../../app/models/activity';
 import { RootStoreContext } from '../../../../../app/stores/rootStore';
 
-const activityImageStyle = {
-  filter: 'brightness(30%)'
-};
-
 const activityImageTextStyle = {
   position: 'absolute',
   bottom: '5%',

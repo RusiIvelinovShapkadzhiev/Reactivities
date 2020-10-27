@@ -13,7 +13,8 @@ namespace Application.Activities
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(s => s.AppUser.UserName))
                 .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(s => s.AppUser.DisplayName))
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(s =>
-                s.AppUser.Photos.FirstOrDefault(ph => ph.IsMain).Url));
+                s.AppUser.Photos.FirstOrDefault(ph => ph.IsMain).Url))
+                .ForMember(d => d.Following, o => o.MapFrom<FollowingResolver>());
         }
     }
 }
