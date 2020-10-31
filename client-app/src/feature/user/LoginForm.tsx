@@ -34,7 +34,12 @@ const LoginForm = () => {
                 pristine,
                 dirtySinceLastSubmit
             }) => (
-                <Form onSubmit={handleSubmit} error>
+                <Form
+                    onSubmit={handleSubmit}
+                    error
+                    //this bellow is for stoping browser for automatically to fill the Login form
+                    // autoComplete='off'
+                >
                     <Header 
                     as='h2'
                     content='Login to Reactivities'
