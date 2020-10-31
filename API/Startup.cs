@@ -140,7 +140,10 @@ namespace API
             services.AddScoped<IUserAccessors, UserAccessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.AddScoped<IProfileReader, ProfileReader>();
+            services.AddScoped<IFacebookAccessor, FacebookAccessor>();
             services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
+            services.Configure<FacebookAppSettings>
+                (Configuration.GetSection("Authentication:Facebook"));
 
 
             // identityBuilder.AddSignInManager();
